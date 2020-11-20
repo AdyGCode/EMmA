@@ -17,12 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resources([
-    'equipment-types' => \App\Http\Controllers\EquipmentTypeController::class,
-    'campuses' => \App\Http\Controllers\CampusController::class,
-    'equipment' => \App\Http\Controllers\EquipmentController::class,
-    'assets' => \App\Http\Controllers\AssetController::class,
-]);
+//Route::resources([
+//    'equipment-types' => \App\Http\Controllers\EquipmentTypeController::class,
+//    'campuses' => \App\Http\Controllers\CampusController::class,
+//    'equipment' => \App\Http\Controllers\EquipmentController::class,
+//    'assets' => \App\Http\Controllers\AssetController::class,
+//]);
+Route::get('campuses',\App\Http\Livewire\Campuses::class);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
