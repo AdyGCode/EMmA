@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Equipment;
 
 class EquipmentType extends Model
 {
@@ -17,4 +18,8 @@ class EquipmentType extends Model
         'description',
         'icon',
     ];
+
+    function equipment(){
+        return $this->hasMany('Equipment');
+    }
 }
