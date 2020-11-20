@@ -24,6 +24,7 @@ Route::get('/', function () {
 //    'assets' => \App\Http\Controllers\AssetController::class,
 //]);
 Route::get('campuses',\App\Http\Livewire\Campuses::class);
+Route::get('equipment-types',\App\Http\Livewire\EquipmentTypes::class);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

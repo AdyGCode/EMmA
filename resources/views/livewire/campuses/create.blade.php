@@ -20,7 +20,7 @@
                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                    id="campusCode" placeholder="Enter Code" wire:model="code">
                             @error('code') <span class="text-red-500">
-                                {{ $message                             }}
+                                {{ $message }}
                             </span>@enderror
                         </div>
                         <div class="mb-4">
@@ -32,7 +32,7 @@
                                 id="campusName" wire:model="name"
                                 placeholder="Enter Name">
                             @error('name') <span class="text-red-500">
-                                {{ $message                             }}
+                                {{ $message }}
                             </span>@enderror
                         </div>
                         <div class="mb-4">
@@ -44,7 +44,7 @@
                                    id="campusAddress" placeholder="Enter Address"
                                    wire:model="address">
                             @error('address') <span class="text-red-500">
-                                {{ $message                             }}
+                                {{ $message }}
                             </span>@enderror
                         </div>
                         <div class="mb-4">

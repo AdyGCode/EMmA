@@ -10,6 +10,7 @@ class Campuses extends Component
     public $campuses;
     public $name, $suburb, $code, $address, $campus_id;
     public $isOpen;
+    public $updateMode = false;
 
     public function render()
     {
@@ -39,15 +40,17 @@ class Campuses extends Component
         $this->suburb = "";
         $this->code = "";
         $this->address = "";
-        $this->campus_id="";
+        $this->campus_id = "";
     }
 
     public function store()
     {
-        $this->validate([
-            'name' => 'required|min:3',
-            'code' => 'required|unique:campuses',
-        ]);
+        // Modify rule depending on if it is an edit or an update
+        $rules = ['name' => 'required|min:3',];
+        if (!$this->updateMode) {
+            $rules['code'] = 'required|unique:campuses';
+        }
+        $this->validate($rules);
 
         Campus::updateOrCreate(
             ['id' => $this->campus_id],

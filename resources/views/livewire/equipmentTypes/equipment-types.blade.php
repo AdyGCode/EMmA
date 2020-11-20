@@ -1,6 +1,6 @@
 <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Manage Campuses
+        Manage Equipment Types
     </h2>
 </x-slot>
 
@@ -22,38 +22,34 @@
 
             <button wire:click="create()"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">
-                Create Campus
+                Create Equipment Type
             </button>
             @if($isOpen)
-                @include('livewire.campuses.create')
+                @include('livewire.equipmentTypes.create')
             @endif
 
             <table class="table-fixed w-full">
                 <thead>
                 <tr class="bg-gray-100">
                     <th class="px-4 py-2 w-20">No.</th>
-                    <th class="px-4 py-2">Code</th>
+                    <th class="px-4 py-2 w-32">Code</th>
                     <th class="px-4 py-2">Name</th>
-                    <th class="px-4 py-2">Suburb</th>
-                    <th class="px-4 py-2">Action</th>
+                    <th class="px-4 py-2 w-16 text-center">Icon</th>
+                    <th class="px-4 py-2 w-64 ">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($campuses as $campus)
+                @foreach($equipmentTypes as $equipmentType)
                     <tr>
-                        <td class="border px-4 py-2">{{ $campus->id }}</td>
-                        <td class="border px-4 py-2">{{ $campus->code }}</td>
-                        <td class="border px-4 py-2">{{ $campus->name}}</td>
-                        <td class="border px-4 py-2">{{ $campus->suburb}}</td>
-                        <td class="border px-4 py-2">
-                            <button wire:click="edit({{ $campus->id }})"
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                Edit
-                            </button>
-                            <button wire:click="delete({{ $campus->id }})"
-                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                Delete
-                            </button>
+                        <td class="border px-4 py-2">{{ $equipmentType->id }}</td>
+                        <td class="border px-4 py-2">{{ $equipmentType->code }}</td>
+                        <td class="border px-4 py-2">{{ $equipmentType->name}}</td>
+                        <td class="border px-4 py-2 text-center">
+                            <i class="fa fa-{{$equipmentType->icon}}"></i>
+                        </td>
+                        <td class="border px-4 py-2 text-center">
+                            <button wire:click="edit({{ $equipmentType->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
+                            <button wire:click="delete({{ $equipmentType->id }})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
                         </td>
                     </tr>
                 @endforeach
@@ -62,3 +58,5 @@
         </div>
     </div>
 </div>
+
+
