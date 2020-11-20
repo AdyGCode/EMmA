@@ -15,7 +15,12 @@ class CreateEquipmentTypesTable extends Migration
     {
         Schema::create('equipment_types', function (Blueprint $table) {
             $table->id();
+            $table->string('code', 7)->unique()->default('UNKNOWN');
+            $table->string('name', 32)->default('UNKNOWN');
+            $table->string('description')->nullable();
+            $table->string('icon')->default('question');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

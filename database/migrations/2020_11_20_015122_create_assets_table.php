@@ -15,7 +15,11 @@ class CreateAssetsTable extends Migration
     {
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('equipment_id')->default(0);
+            $table->string('asset_number')->nullable();
+            $table->string('campus_code',3)->default('ZZZ');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

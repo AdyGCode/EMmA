@@ -17,6 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resources([
+    'equipment-types' => \App\Http\Controllers\EquipmentTypeController::class,
+    'campuses' => \App\Http\Controllers\CampusController::class,
+    'equipment' => \App\Http\Controllers\EquipmentController::class,
+    'assets' => \App\Http\Controllers\AssetController::class,
+]);
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');

@@ -15,6 +15,9 @@ class CreateFAIconsTable extends Migration
     {
         Schema::create('f_a_icons', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('set')->default('far');
+            $table->boolean('free')->default(false);
             $table->timestamps();
         });
     }
