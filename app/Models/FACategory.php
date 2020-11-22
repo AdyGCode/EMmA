@@ -5,19 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Equipment extends Model
+class FACategory extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'code',
         'name',
         'description',
-        'equipment_type_id',
     ];
 
-    function equipmentType()
+    public function icon(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->belongsTo('\App\Models\EquipmentType');
+        return $this->belongsTo('\App\Models\FAIcon');
     }
 }

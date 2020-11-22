@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Equipment;
 
 class EquipmentType extends Model
 {
@@ -16,10 +15,26 @@ class EquipmentType extends Model
         'code',
         'name',
         'description',
-        'icon',
+        'f_a_icon_id',
     ];
 
-    function equipment(){
-        return $this->hasMany('Equipment');
+    public function equipment()
+    {
+        return $this->hasMany('\App\Models\Equipment');
+    }
+
+    public function icon()
+    {
+        return $this->belongsTo('\App\Models\FAIcon');
+    }
+
+    public function iconName($iconID)
+    {
+        return FAIcon::whereId($iconID)->first()->name;
+    }
+
+    public function iconSet($iconID)
+    {
+        return FAIcon::whereId($iconID)->first()->set;
     }
 }

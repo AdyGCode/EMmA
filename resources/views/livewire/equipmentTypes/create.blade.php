@@ -58,8 +58,8 @@
                                     id="equipmentTypeIcon" placeholder="Select Icon"
                                     wire:model="icon">
                                 <option value="" selected>No Icon</option>
-                                @foreach($icons as $icon)
-                                    <option value="{{$icon->name}}">{{ $icon->name }}</option>
+                                @foreach($faIcons as $icon)
+                                    <option value="{{$icon->id}}">{{ $icon->name }}</option>
                                 @endforeach
                             </select>
 

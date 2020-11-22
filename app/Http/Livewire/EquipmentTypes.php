@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\EquipmentType;
-use App\Models\FAIcon;
 use Livewire\Component;
 
 class EquipmentTypes extends Component
@@ -11,14 +10,16 @@ class EquipmentTypes extends Component
 
     public $equipmentTypes;
     public $name, $description, $code, $icon, $equipmentType_id;
-    public $icons;
-    public $isOpen;
-    public $updateMode = false;
+
+    public $faIcons, $faCategories;
+
+    public $isOpen = false, $updateMode = false;
 
     public function render()
     {
         $this->equipmentTypes = EquipmentType::all();
-        $this->icons = FAIcon::all();
+        $this->faIcons = \App\Models\FAIcon::all();
+        $this->faCategories = \App\Models\FACategory::all();
 
         return view('livewire.equipmentTypes.equipment-types');
     }
@@ -64,7 +65,7 @@ class EquipmentTypes extends Component
                 'name' => $this->name,
                 'description' => $this->description,
                 'code' => $this->code,
-                'icon' => $this->icon,
+                'f_a_icon_id' => $this->icon,
             ]);
 
         session()->flash('message',

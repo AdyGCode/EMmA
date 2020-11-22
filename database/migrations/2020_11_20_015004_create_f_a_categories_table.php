@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAssetsTable extends Migration
+class CreateFACategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateAssetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('assets', function (Blueprint $table) {
+        Schema::create('f_a_categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('equipment_id')->default(0);
-            $table->string('asset_number')->nullable();
-            $table->string('campus_code',3)->default('ZZZ');
+            $table->string('name', 32)->default('unknown');
+            $table->string('description', 64)->default('Unknown Category');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -30,6 +28,6 @@ class CreateAssetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assets');
+        Schema::dropIfExists('f_a_categories');
     }
 }
