@@ -24,12 +24,6 @@ class FACategorySeeder extends Seeder
             'created_at' => Carbon::now(),
         ]);
 
-        FACategory::insert([
-            'id'=>2,
-            'name' => "all",
-            'description' => "All Categories",
-            'created_at' => Carbon::now(),
-        ]);
 
         FACategory::insert([
             'id'=>3,

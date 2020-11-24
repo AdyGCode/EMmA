@@ -46,9 +46,12 @@ class Campuses extends Component
     public function store()
     {
         // Modify rule depending on if it is an edit or an update
-        $rules = ['name' => 'required|min:3',];
+        $rules = [
+            'code' => 'required|min:3|max:3',
+            'name' => 'required|min:3',
+            ];
         if (!$this->updateMode) {
-            $rules['code'] = 'required|unique:campuses';
+            $rules['code'] .= '|unique:campuses';
         }
         $this->validate($rules);
 
@@ -57,7 +60,7 @@ class Campuses extends Component
             [
                 'name' => $this->name,
                 'suburb' => $this->suburb,
-                'code' => $this->code,
+                'code' => strtoupper($this->code),
                 'address' => $this->address,
             ]);
 
