@@ -6,13 +6,15 @@ use App\Models\EquipmentType;
 use App\Models\FACategory;
 use App\Models\FAIcon;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class EquipmentTypes extends Component
 {
+    use WithPagination;
 
     public $name, $description, $code, $icon, $equipmentType_id;
 
-    public $equipmentTypes;
+    //public $equipmentTypes;
     public $icons = [];
     public $categories, $category;
 
@@ -26,9 +28,9 @@ class EquipmentTypes extends Component
             $this->icons = FAIcon::where('f_a_category_id', $this->category)->get();
         }
 
-        $this->equipmentTypes = EquipmentType::all();
-
-        return view('livewire.equipmentTypes.equipment-types');
+        return view('livewire.equipmentTypes.equipment-types', [
+            'equipmentTypes' => EquipmentType::paginate(5)
+        ]);
     }
 
     public function mount($category = null, $icon = 0)
