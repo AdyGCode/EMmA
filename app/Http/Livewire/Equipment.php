@@ -11,7 +11,7 @@ class Equipment extends Component
 {
 
     public $equipmentTypes, $equipment;
-    public $code,$name, $description, $equipment_id, $equipment_type_id;
+    public $code, $name, $description, $equipment_id, $equipment_type_id;
     public $isOpen;
     public $updateMode = false;
 
@@ -52,9 +52,11 @@ class Equipment extends Component
     public function store()
     {
         // Modify rule depending on if it is an edit or an update
-        $rules = ['name' => 'required|min:3',];
+        $rules = [
+            'name' => 'required|min:3',
+        ];
         if (!$this->updateMode) {
-            $rules['code'] = 'required|unique:equipment';
+            $rules['code'] .= '|unique:equipment';
         }
         $this->validate($rules);
 
@@ -63,9 +65,9 @@ class Equipment extends Component
             [
                 'name' => $this->name,
                 'description' => $this->description,
-                'code' => $this->code,
+                'code' => strtoupper($this->code),
                 'equipment_type_id' => $this->equipment_type_id,
-        ]);
+            ]);
 
         session()->flash('message',
             $this->equipment_id ? 'Equipment Item Updated Successfully.' : 'Equipment Item Created Successfully.');

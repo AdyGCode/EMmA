@@ -45,11 +45,19 @@
                         <td class="border px-4 py-2">{{ $equipmentType->code }}</td>
                         <td class="border px-4 py-2">{{ $equipmentType->name}}</td>
                         <td class="border px-4 py-2 text-center">
-                            <i class="fa fa-{{$equipmentType->icon}}"></i>
+                            <i class="fa {{ $equipmentType->iconSet
+                            ($equipmentType->f_a_icon_id) }} fa-{{ $equipmentType->iconName
+                            ($equipmentType->f_a_icon_id) }}"></i>
                         </td>
                         <td class="border px-4 py-2 text-center">
-                            <button wire:click="edit({{ $equipmentType->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
-                            <button wire:click="delete({{ $equipmentType->id }})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                            <button wire:click="edit({{ $equipmentType->id }})"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Edit
+                            </button>
+                            <button wire:click="delete({{ $equipmentType->id }})"
+                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                Delete
+                            </button>
                         </td>
                     </tr>
                 @endforeach

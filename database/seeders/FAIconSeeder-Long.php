@@ -2,13 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\FACategory;
 use App\Models\FAIcon;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Symfony\Component\Yaml\Yaml;
 
-class FAIconSeeder extends Seeder
+class FAIconSeeder_Long extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,10 +15,9 @@ class FAIconSeeder extends Seeder
      */
     public function run()
     {
-        // ['name' => 'zhihu', 'set' => 'fab', 'free' => true,],
+        //
 
-        // Icon list accurate as of 22/11/2020 -- ~1600 rows
-        $iconList = [
+        $icons = [
             ['name' => 'ad', 'set' => 'fas', 'free' => true,],
             ['name' => 'address-book', 'set' => 'fas', 'free' => true,],
             ['name' => 'address-card', 'set' => 'fas', 'free' => true,],
@@ -623,6 +620,7 @@ class FAIconSeeder extends Seeder
             ['name' => 'mouse-pointer', 'set' => 'fas', 'free' => true,],
             ['name' => 'mug-hot', 'set' => 'fas', 'free' => true,],
             ['name' => 'music', 'set' => 'fas', 'free' => true,],
+            ['name' => 'network-wired', 'set' => 'fas', 'free' => true,],
             ['name' => 'neuter', 'set' => 'fas', 'free' => true,],
             ['name' => 'newspaper', 'set' => 'fas', 'free' => true,],
             ['name' => 'not-equal', 'set' => 'fas', 'free' => true,],
@@ -1629,51 +1627,15 @@ class FAIconSeeder extends Seeder
             ['name' => 'youtube', 'set' => 'fab', 'free' => true,],
             ['name' => 'youtube-square', 'set' => 'fab', 'free' => true,],
             ['name' => 'zhihu', 'set' => 'fab', 'free' => true,],
-            ['name' => 'network-wired', 'set' => 'fas', 'free' => true,],
         ];
 
-        $this->command->info('>>> BEGIN: Icons with categories >>>');
-        $base = base_path();
-        $faPath = $base.'/node_modules/@fortawesome/fontawesome-free/metadata/categories.yml';
-        $fileContent = file_get_contents($faPath);
-        $yamlContents = Yaml::parse($fileContent);
-        foreach ($yamlContents as $categoryName => $category) {
-            foreach ($category['icons'] as $icon) {
-                $foundAt = array_search($icon, array_column($iconList, 'name'));
-                $set = $iconList[$foundAt]['set'];
-                $iconName = $iconList[$foundAt]['name'];
-                $faCategory = FACategory::where('name', '=', $categoryName)->get();
-                FAIcon::insert([
-                    'set' => $set,
-                    'name' => $iconName,
-                    'free' => true,
-                    'f_a_category_id' => $faCategory[0]->id,
-                    'created_at' => Carbon::now(),
-                ]);
-            }
+        foreach ($icons as $item) {
+            FAIcon::insert([
+                'set' => $item['set'],
+                'name' => $item['name'],
+                'free' => $item['free'],
+                'created_at' => Carbon::now(),
+            ]);
         }
-        $this->command->info('<<< DONE: Icons with categories <<<');
-
-        // Find the unique names that have been added so far
-        $allIcons = FAIcon::all()->groupBy('name');
-
-        $unknownCategoryID = FACategory::whereName('unknown')->first()->id;
-        $brandCategoryID = FACategory::whereName('brands')->first()->id;
-
-        $this->command->info('>>> BEGIN: Icons without category >>>');
-        foreach ($iconList as $icon) {
-            $foundAt = $allIcons->where('name', '=', $icon)->first();
-            if ($foundAt === null) {
-                $faCategory = ($icon['set'] === 'fab') ? $brandCategoryID : $unknownCategoryID;
-                FAIcon::insert([
-                    'set' => $icon['set'],
-                    'name' => $icon['name'],
-                    'free' => true,
-                    'f_a_category_id' => $faCategory,
-                    'created_at' => Carbon::now(),
-                ]);
-            }
-        }
-        $this->command->info('<<< DONE: Icons without category <<<');
     }
 }

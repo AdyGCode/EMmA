@@ -31,10 +31,10 @@
             <table class="table-fixed w-full">
                 <thead>
                 <tr class="bg-gray-100">
-                    <th class="px-4 py-2 w-20">No.</th>
-                    <th class="px-4 py-2 w-32">Code</th>
-                    <th class="px-4 py-2">Name</th>
-                    <th class="px-4 py-2">Type</th>
+                    <th class="px-4 py-2 w-20 text-left">No.</th>
+                    <th class="px-4 py-2 w-32 text-left">Code</th>
+                    <th class="px-4 py-2 text-left">Name</th>
+                    <th class="px-4 py-2 text-left">Type</th>
                     <th class="px-4 py-2 w-64 ">Action</th>
                 </tr>
                 </thead>
@@ -44,8 +44,8 @@
                         <td class="border px-4 py-2">{{ $item->id }}</td>
                         <td class="border px-4 py-2">{{ $item->code }}</td>
                         <td class="border px-4 py-2">{{ $item->name}}</td>
-                        <td class="border px-4 py-2 text-center">
-                            {{$item->equipment_type_id}}
+                        <td class="border px-4 py-2">
+                            {{$item->equipmentType->name}}
                         </td>
                         <td class="border px-4 py-2 text-center">
                             <button wire:click="edit({{ $item->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>

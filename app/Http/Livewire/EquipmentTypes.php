@@ -3,24 +3,46 @@
 namespace App\Http\Livewire;
 
 use App\Models\EquipmentType;
+use App\Models\FACategory;
 use App\Models\FAIcon;
 use Livewire\Component;
 
 class EquipmentTypes extends Component
 {
 
-    public $equipmentTypes;
     public $name, $description, $code, $icon, $equipmentType_id;
-    public $icons;
-    public $isOpen;
-    public $updateMode = false;
+
+    public $equipmentTypes;
+    public $icons = [];
+    public $categories, $category;
+
+    public $isOpen = false, $updateMode = false;
 
     public function render()
     {
+        $this->categories = FACategory::orderBy('name')->get();
+
+        if (!empty($this->category)) {
+            $this->icons = FAIcon::where('f_a_category_id', $this->category)->get();
+        }
+
         $this->equipmentTypes = EquipmentType::all();
-        $this->icons = FAIcon::all();
 
         return view('livewire.equipmentTypes.equipment-types');
+    }
+
+    public function mount($category = null, $icon = 0)
+    {
+        $this->category = $category;
+        $this->icon = $icon;
+    }
+
+
+    public function updated()
+    {
+        if (!empty($this->icon)) {
+//            dd($this->icon);
+        }
     }
 
     public function openModal()
@@ -52,9 +74,13 @@ class EquipmentTypes extends Component
     public function store()
     {
         // Modify rule depending on if it is an edit or an update
-        $rules = ['name' => 'required|min:3',];
+        $rules = [
+            'code' => 'required|min:1|max:7',
+            'name' => 'required|min:3|max:32',
+            'icon' => 'required'
+        ];
         if (!$this->updateMode) {
-            $rules['code'] = 'required|unique:equipment_types';
+            $rules['code'] .= '|unique:equipment_types';
         }
         $this->validate($rules);
 
@@ -63,8 +89,8 @@ class EquipmentTypes extends Component
             [
                 'name' => $this->name,
                 'description' => $this->description,
-                'code' => $this->code,
-                'icon' => $this->icon,
+                'code' => strtoupper($this->code),
+                'f_a_icon_id' => $this->icon,
             ]);
 
         session()->flash('message',
@@ -82,7 +108,7 @@ class EquipmentTypes extends Component
         $this->equipmentType_id = $id;
         $this->name = $EquipmentType->name;
         $this->description = $EquipmentType->description;
-        $this->code = $EquipmentType->code;
+        $this->code = strtoupper($EquipmentType->code);
         $this->icon = $EquipmentType->icon;
         $this->openModal();
     }

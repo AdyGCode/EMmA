@@ -3,9 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\EquipmentType;
+use App\Models\FAIcon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
+use mysql_xdevapi\Exception;
 
 class EquipmentTypeSeeder extends Seeder
 {
@@ -93,7 +95,7 @@ class EquipmentTypeSeeder extends Seeder
                 'code' => 'SWTCH',
                 'name' => 'Network Switch',
                 'description' => 'Network Switch',
-                'icon' => 'switch',
+                'icon' => 'wired-network',
                 'created_at' => Carbon::now(),
             ],
             [
@@ -101,31 +103,39 @@ class EquipmentTypeSeeder extends Seeder
                 'name' => 'Hat or pHat',
                 'description' => 'Development board containing sensors, actuators and other '.
                     'extended capabilities for SBCs and Microcontrollers',
-                'icon' => 'hat',
+                'icon' => 'hard-hat',
                 'created_at' => Carbon::now(),
             ],
             [
                 'code' => 'SENSR',
                 'name' => 'Sensor',
                 'description' => 'Electronic sensor component or small PCB with sensor electronics',
-                'icon' => 'video',
+                'icon' => 'thermometer-quarter',
                 'created_at' => Carbon::now(),
             ],
             [
                 'code' => 'ACTR',
                 'name' => 'Actuator',
                 'description' => 'Electronic actuator component or small PCB with actuator electronics',
-                'icon' => 'video',
+                'icon' => 'fan',
                 'created_at' => Carbon::now(),
             ],
         ];
 
+        $questionIconID = FAIcon::whereName('question')->first()->id;
+
         foreach ($types as $type) {
+            $icon = $type['icon'];
+            $faIcon = FAIcon::whereName($icon)->first();
+            $iconID = $questionIconID;
+            if ($faIcon !== null) {
+                $iconID = $faIcon->id;
+            }
             EquipmentType::insert([
                 'code' => $type['code'],
                 'name' => $type['name'],
                 'description' => $type['description'],
-                'icon' => $type['icon'],
+                'f_a_icon_id' => $iconID,
                 'created_at' => $type['created_at'],
             ]);
         }

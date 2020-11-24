@@ -20,9 +20,9 @@
                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                    id="equipmentTypeCode" placeholder="Enter Code"
                                    wire:model="code">
-                            @error('code') <span class="text-red-500">
-                                {{ $message }}
-                            </span>@enderror
+                            @error('code')
+                            <span class="text-red-500"> {{ $message }} </span>
+                            @enderror
                         </div>
                         <div class="mb-4">
                             <label for="equipmentTypeName"
@@ -32,42 +32,62 @@
                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                    id="equipmentTypeName" wire:model="name"
                                    placeholder="Enter Name">
-                            @error('name') <span class="text-red-500">
-                                {{ $message }}
-                            </span>@enderror
+                            @error('name')
+                            <span class="text-red-500"> {{ $message }} </span>
+                            @enderror
                         </div>
                         <div class="mb-4">
-                            <label for="equipmentTypeAddress"
+                            <label for="equipmentTypeDescription"
                                    class="block text-gray-700 text-sm font-bold mb-2">
                                 Description:</label>
                             <textarea
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="equipmentTypeDescription" placeholder="Enter Description"
                                 wire:model="description"></textarea>
-                            @error('description') <span class="text-red-500">
-                                {{ $message }}
-                            </span>@enderror
+                            @error('description')
+                            <span class="text-red-500"> {{ $message }} </span>
+                            @enderror
                         </div>
                         <div class="mb-4">
                             <label for="equipmentTypeIcon"
                                    class="block text-gray-700 text-sm font-bold mb-2">
-                                Icon:</label>
+                                Icon Category:</label>
+                            <div class="mb-8">
+                                <select id="categoryName" name="category"
+                                        wire:model="category"
+                                        class="w-full p-2 px-4 py-2 pr-8 leading-tight bg-white
+                                            border border-gray-400 rounded shadow appearance-none
+                                            hover:border-gray-500 focus:outline-none focus:shadow-outline">
+                                    <option value=''>Choose a category</option>
+                                    @foreach($categories as $category)
+                                        <option
+                                            value={{ $category->id }}>{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-                            <select class="shadow appearance-none border rounded w-full py-2
-                            px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="equipmentTypeIcon" placeholder="Select Icon"
-                                    wire:model="icon">
-                                <option value="" selected>No Icon</option>
-                                @foreach($icons as $icon)
-                                    <option value="{{$icon->name}}">{{ $icon->name }}</option>
-                                @endforeach
-                            </select>
+                            @if(count($icons) > 0)
+                                <label for="equipmentTypeIcon"
+                                       class="block text-gray-700 text-sm font-bold mb-2">
+                                    Icon Category:</label>
 
-                            @error('icon') <span class="text-red-500">
-                                {{ $message }}
-                            </span>@enderror
+                                <select name="icon" wire:model="icon" id="equipmentTypeIcon"
+                                        class="w-full p-2 px-4 py-2 pr-8 leading-tight bg-white
+                                        border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline">
+                                    <option value=''>Choose an icon</option>
+                                    @foreach($icons as $icon)
+                                        <option
+                                            value={{ $icon->id }}>{{ $icon->name }}</option>
+                                    @endforeach
+                                </select>
                         </div>
+                        @endif
                     </div>
+                    @error('icon')
+                    <span class="text-red-500">
+                        {{ $message }}
+                    </span>
+                    @enderror
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">

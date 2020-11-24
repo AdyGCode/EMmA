@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFAIconsTable extends Migration
+class CreateBuildingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateFAIconsTable extends Migration
      */
     public function up()
     {
-        Schema::create('f_a_icons', function (Blueprint $table) {
+        Schema::create('buildings', function (Blueprint $table) {
             $table->id();
-            $table->string('name',64);
-            $table->string('set',6)->default('far');
-            $table->unsignedBigInteger('f_a_category_id')->default(1);
-            $table->boolean('free')->default(false);
+            $table->string('code')->default('ZZZ');
+            $table->string('name')->default('UNKNOWN');
+            $table->unsignedBigInteger('campus_id')->default(0);
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateFAIconsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('f_a_icons');
+        Schema::dropIfExists('buildings');
     }
 }
