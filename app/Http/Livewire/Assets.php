@@ -2,19 +2,18 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\EquipmentType;
+use App\Models\Asset;
 use App\Models\FACategory;
 use App\Models\FAIcon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class EquipmentTypes extends Component
+class Assets extends Component
 {
     use WithPagination;
+    public $name, $description, $code, $icon, $asset_id;
 
-    public $name, $description, $code, $icon, $equipmentType_id;
-
-    //public $equipmentTypes;
+    //public $assets;
     public $icons = [];
     public $categories, $category;
 
@@ -28,8 +27,8 @@ class EquipmentTypes extends Component
             $this->icons = FAIcon::where('f_a_category_id', $this->category)->get();
         }
 
-        return view('livewire.equipmentTypes.equipment-types', [
-            'equipmentTypes' => EquipmentType::paginate(5)
+        return view('livewire.assets.assets', [
+            'assets' => Asset::paginate(5)
         ]);
     }
 
@@ -69,7 +68,7 @@ class EquipmentTypes extends Component
         $this->description = "";
         $this->code = "";
         $this->icon = "";
-        $this->equipmentType_id = "";
+        $this->asset_id = "";
         $this->updateMode = false;
     }
 
@@ -86,8 +85,8 @@ class EquipmentTypes extends Component
         }
         $this->validate($rules);
 
-        EquipmentType::updateOrCreate(
-            ['id' => $this->equipmentType_id],
+        Asset::updateOrCreate(
+            ['id' => $this->asset_id],
             [
                 'name' => $this->name,
                 'description' => $this->description,
@@ -96,7 +95,7 @@ class EquipmentTypes extends Component
             ]);
 
         session()->flash('message',
-            $this->equipmentType_id ? 'Equipment Type Updated Successfully.' : 'Equipment Type Created Successfully.');
+            $this->asset_id ? 'Asset Updated Successfully.' : 'Asset Created Successfully.');
 
         $this->closeModal();
         $this->resetInputFields();
@@ -106,20 +105,21 @@ class EquipmentTypes extends Component
     {
         $this->updateMode = true;
 
-        $EquipmentType = EquipmentType::findOrFail($id);
-        $this->equipmentType_id = $id;
-        $this->name = $EquipmentType->name;
-        $this->description = $EquipmentType->description;
-        $this->code = strtoupper($EquipmentType->code);
-        $this->icon = $EquipmentType->icon;
+        $Asset = Asset::findOrFail($id);
+        $this->asset_id = $id;
+        $this->name = $Asset->name;
+        $this->description = $Asset->description;
+        $this->code = strtoupper($Asset->code);
+        $this->icon = $Asset->icon;
         $this->openModal();
     }
 
 
     public function delete($id)
     {
-        EquipmentType::find($id)->delete();
-        session()->flash('message', 'EquipmentType Deleted Successfully.');
+        Asset::find($id)->delete();
+        session()->flash('message', 'Asset Deleted Successfully.');
     }
+
 
 }

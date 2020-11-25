@@ -53,7 +53,8 @@ class Equipment extends Component
     {
         // Modify rule depending on if it is an edit or an update
         $rules = [
-            'name' => 'required|min:3',
+            'code' => 'required|min:3|max:7',
+            'name' => 'required|min:3|max:32',
         ];
         if (!$this->updateMode) {
             $rules['code'] .= '|unique:equipment';
@@ -89,12 +90,10 @@ class Equipment extends Component
         $this->openModal();
     }
 
-
     public function delete($id)
     {
         \App\Models\Equipment::find($id)->delete();
         session()->flash('message', 'Equipment item deleted successfully.');
     }
-
 
 }
